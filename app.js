@@ -123,7 +123,7 @@ const lose = () => {
     imgCard.innerHTML = `
             <img src="images/rank_emblems/Bronze.png" class="h-100" />
             <h5 class="text-center text-light">
-                Oof! You only got <span class="text-success">${score}</span> right! At least you're not Iron!
+                Oof! You only got <span class="text-success">${score}</span> right! At least you're not Iron...
             </h5>
         `;
   } else {
