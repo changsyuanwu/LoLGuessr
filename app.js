@@ -40,7 +40,7 @@ const getChampionJson = async (champName) => {
 };
 
 const getRandomImageType = async () => {
-  const imageTypes = ["centered", "loading", "splash", "tiles"];
+  const imageTypes = ["centered", "loading", "tiles"];
   return imageTypes[Math.floor(Math.random() * imageTypes.length)];
 };
 
