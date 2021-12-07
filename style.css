@@ -1,0 +1,17 @@
+.max-width {
+    max-width: 1200px;
+}
+
+.image-wrapper {
+    height: 600px;
+}
+
+.page-wrapper {
+    min-height: 100vh;
+    height: 100%;
+    background: rgb(7, 18, 26);
+}
+
+#btn-wrapper {
+    margin-bottom: 2rem;
+}
