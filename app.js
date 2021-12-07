@@ -1,5 +1,17 @@
 const numOptions = 4;
 let score = 0;
+const scoreTiers = {
+  Iron: 5,
+  Bronze: 10,
+  Silver: 15,
+  Gold: 20,
+  Platinum: 25,
+  Diamond: 30,
+  Master: 35,
+  Grandmaster: 40,
+  Challenger: 45,
+};
+
 const getChampionNames = async () => {
   const url =
     "https://ddragon.leagueoflegends.com/cdn/11.23.1/data/en_US/champion.json";
@@ -100,23 +112,23 @@ const lose = () => {
   const btn_wrapper = document.getElementById("btn-wrapper");
   const imgCard = document.querySelector("#img-card");
   const restart = document.createElement("button");
-  if (score <= badScore) {
+  if (score <= scoreTiers.Iron) {
     imgCard.innerHTML = `
-            <img src="images/Emblem_Iron.png" class="h-100" />
+            <img src="images/rank_emblems/Iron.png" class="h-100" />
              <h5 class="text-center text-light">
-                Yikers bro! You only got a score of <span class="text-success">${score}</span>! Gotta grind more League...
+                Yikes! You only got a score of <span class="text-success">${score}</span>! You're in the bottom 1% of players...
             </h5>
         `;
-  } else if (score <= decentScore) {
+  } else if (score <= scoreTiers.Bronze) {
     imgCard.innerHTML = `
-            <img src="images/Emblem_Platinum.png" class="h-100" />
+            <img src="images/rank_emblems/Bronze.png" class="h-100" />
             <h5 class="text-center text-light">
-                Hey not bad! You got <span class="text-success">${score}</span> right!
+                Oof! You only got <span class="text-success">${score}</span> right! At least you're not Iron!
             </h5>
         `;
   } else {
     imgCard.innerHTML = `
-            <img src="images/Emblem_Challenger.png" class="h-100" />
+            <img src="images/rank_emblems/Challenger.png" class="h-100" />
             <h5 class="text-center text-light">
                 Seriously? Either this quiz is too easy or you play too much League. <span class="text-success">${score}</span>!
             </h5>
