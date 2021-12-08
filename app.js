@@ -19,7 +19,8 @@ const manualNameCorrections = async (champNames) => {
   };
 
   champNames.map((name) => {
-    name = nameCorrections[name];
+    if (nameCorrections[name])
+      return nameCorrections[name];
   });
 
   return champNames;
