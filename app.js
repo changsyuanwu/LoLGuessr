@@ -1,5 +1,5 @@
 const numOptions = 4;
-let score = 0;
+let score = 50;
 const winScore = 5;
 const scoreTiers = {
   Iron: 5,
@@ -115,16 +115,19 @@ const resetState = async () => {
 
 const win = async () => {
   const btn_wrapper = document.getElementById("btn-wrapper");
+  const instructions = document.getElementById("instructions");
   const restart = document.createElement("button");
   const continuePlaying = document.createElement("button");
 
   await generateResultsScreen("Challenger");
 
+  instructions.textContent = "You can now choose to climb again or continue playing."
+
   continuePlaying.classList.add(
     "btn",
     "btn-success",
     "my-2",
-    "w-40",
+    "w-45",
     "mx-auto"
   );
   continuePlaying.textContent = "Continue Playing";
@@ -133,7 +136,7 @@ const win = async () => {
     run();
   });
 
-  restart.classList.add("btn", "btn-success", "my-2", "w-40", "mx-auto");
+  restart.classList.add("btn", "btn-success", "my-2", "w-45", "mx-auto");
   restart.textContent = "Try Again";
   restart.addEventListener("click", async () => {
     score = 0;
