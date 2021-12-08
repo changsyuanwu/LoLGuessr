@@ -1,6 +1,6 @@
 const numOptions = 4;
 let score = 0;
-const winScore = 5;
+const winScore = 50;
 const scoreTiers = {
   Iron: 5,
   Bronze: 10,
