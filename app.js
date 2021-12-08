@@ -9,7 +9,19 @@ const scoreTiers = {
   Diamond: 30,
   Master: 35,
   Grandmaster: 40,
-  Challenger: 45,
+  Challenger: 50,
+};
+
+const resultMessages = {
+  Iron: `Yikes! You only got a score of <span class="text-success">${score}</span>! You're in the bottom 1% of players...`,
+  Bronze: `Oof! You only got <span class="text-success">${score}</span> right! At least you're not Iron...`,
+  Silver: 15,
+  Gold: 20,
+  Platinum: 25,
+  Diamond: 30,
+  Master: 35,
+  Grandmaster: 40,
+  Challenger: `Congratulations! You managed to get <span class="text-success">${score}</span> corrent! Either this quiz is too easy or you play too much League!`,
 };
 
 const getChampionNames = async () => {
@@ -107,32 +119,42 @@ const win = () => {
   run();
 };
 
-const lose = () => {
+const generateResultsScreen = async (tier) => {
+  const imgCard = document.querySelector("#img-card");
+  const resultRank = document.querySelector("#result-rank");
+  imgCard.innerHTML = `
+            <img src="images/rank_emblems/${tier}.png" class="h-100" />
+             <h5 class="text-center text-light">
+                ${resultMessages[tier]}
+            </h5>
+        `;
+  resultRank.textContent = `Your rank is ${tier}`
+}
+
+const lose = async () => {
   const scoreSpan = document.getElementById("score");
   const btn_wrapper = document.getElementById("btn-wrapper");
   const imgCard = document.querySelector("#img-card");
   const restart = document.createElement("button");
+
   if (score <= scoreTiers.Iron) {
-    imgCard.innerHTML = `
-            <img src="images/rank_emblems/Iron.png" class="h-100" />
-             <h5 class="text-center text-light">
-                Yikes! You only got a score of <span class="text-success">${score}</span>! You're in the bottom 1% of players...
-            </h5>
-        `;
+    await generateResultsScreen("Iron");
   } else if (score <= scoreTiers.Bronze) {
-    imgCard.innerHTML = `
-            <img src="images/rank_emblems/Bronze.png" class="h-100" />
-            <h5 class="text-center text-light">
-                Oof! You only got <span class="text-success">${score}</span> right! At least you're not Iron...
-            </h5>
-        `;
+    await generateResultsScreen("Bronze");
+  } else if (score <= scoreTiers.Silver) {
+    await generateResultsScreen("Silver");
+  } else if (score <= scoreTiers.Gold) {
+    await generateResultsScreen("Gold");
+  } else if (score <= scoreTiers.Platinum) {
+    await generateResultsScreen("Platinum");
+  } else if (score <= scoreTiers.Diamond) {
+    await generateResultsScreen("Diamond");
+  } else if (score <= scoreTiers.Master) {
+    await generateResultsScreen("Master");
+  } else if (score <= scoreTiers.Grandmaster) {
+    await generateResultsScreen("Grandmaster");
   } else {
-    imgCard.innerHTML = `
-            <img src="images/rank_emblems/Challenger.png" class="h-100" />
-            <h5 class="text-center text-light">
-                Seriously? Either this quiz is too easy or you play too much League. <span class="text-success">${score}</span>!
-            </h5>
-        `;
+    await generateResultsScreen("Challenger");
   }
   scoreSpan.textContent = score;
 
