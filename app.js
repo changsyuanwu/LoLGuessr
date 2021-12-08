@@ -15,12 +15,12 @@ const scoreTiers = {
 const resultMessages = {
   Iron: `Yikes! You only got a score of <span class="text-success">${score}</span>! You're in the bottom 1% of players...`,
   Bronze: `Oof! You only got <span class="text-success">${score}</span> right! At least you're not Iron...`,
-  Silver: 15,
-  Gold: 20,
-  Platinum: 25,
-  Diamond: 30,
-  Master: 35,
-  Grandmaster: 40,
+  Silver: `Not bad! You got <span class="text-success">${score}</span> correct! You scored similarly to the average player!`,
+  Gold: `Good job! You got <span class="text-success">${score}</span> correct! You are better than 59% of all players!`,
+  Platinum: `Great job! You got <span class="text-success">${score}</span> right! You've reached Skilled tier and are in the top 10% of players now!`,
+  Diamond: `Well done! You managed to get <span class="text-success">${score}</span> corrent! You're in the top 2% of players!`,
+  Master: `Way to go! You managed to get <span class="text-success">${score}</span> corrent! You've reached Elite tier and are in the top 0.3% of players now!`,
+  Grandmaster: `Fantastic! You managed to get <span class="text-success">${score}</span> corrent! You're one of the top 1000 players now!`,
   Challenger: `Congratulations! You managed to get <span class="text-success">${score}</span> corrent! Either this quiz is too easy or you play too much League!`,
 };
 
