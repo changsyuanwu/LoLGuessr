@@ -1,5 +1,6 @@
 const numOptions = 4;
 let score = 0;
+const winScore = 5;
 const scoreTiers = {
   Iron: 5,
   Bronze: 10,
@@ -87,7 +88,11 @@ const run = async () => {
     btn.addEventListener("click", () => {
       if (btn.id === "correct") {
         score++;
-        win();
+        if (score === winScore) {
+          win();
+        } else {
+          correct();
+        }
       } else {
         lose();
       }
@@ -97,13 +102,52 @@ const run = async () => {
 
 run();
 
-const win = () => {
+const resetState = async () => {
   const scoreSpan = document.getElementById("score");
   const btn_wrapper = document.getElementById("btn-wrapper");
   const imgCard = document.querySelector("#img-card");
-  scoreSpan.textContent = score;
+  const resultRank = document.getElementById("result-rank");
   btn_wrapper.innerHTML = "";
   imgCard.innerHTML = "";
+  scoreSpan.textContent = score;
+  resultRank.innerHTML = "";
+};
+
+const win = async () => {
+  const btn_wrapper = document.getElementById("btn-wrapper");
+  const restart = document.createElement("button");
+  const continuePlaying = document.createElement("button");
+
+  await generateResultsScreen("Challenger");
+
+  continuePlaying.classList.add(
+    "btn",
+    "btn-success",
+    "my-2",
+    "w-40",
+    "mx-auto"
+  );
+  continuePlaying.textContent = "Continue Playing";
+  continuePlaying.addEventListener("click", async () => {
+    await resetState();
+    run();
+  });
+
+  restart.classList.add("btn", "btn-success", "my-2", "w-40", "mx-auto");
+  restart.textContent = "Try Again";
+  restart.addEventListener("click", async () => {
+    score = 0;
+    await resetState();
+    run();
+  });
+
+  btn_wrapper.innerHTML = "";
+  btn_wrapper.append(restart);
+  btn_wrapper.append(continuePlaying);
+};
+
+const correct = async () => {
+  await resetState();
   run();
 };
 
@@ -114,15 +158,15 @@ const generateResultsScreen = async (tier) => {
     Silver: `Not bad! You got <span class="text-success">${score}</span> correct! You scored similarly to the average player!`,
     Gold: `Good job! You got <span class="text-success">${score}</span> correct! You are better than 59% of all players!`,
     Platinum: `Great job! You got <span class="text-success">${score}</span> right! You've reached Skilled tier and are in the top 10% of players now!`,
-    Diamond: `Well done! You managed to get <span class="text-success">${score}</span> corrent! You're in the top 2% of players!`,
-    Master: `Way to go! You managed to get <span class="text-success">${score}</span> corrent! You've reached Elite tier and are in the top 0.3% of players now!`,
-    Grandmaster: `Fantastic! You managed to get <span class="text-success">${score}</span> corrent! You're one of the top 1000 players now!`,
-    Challenger: `Congratulations! You managed to get <span class="text-success">${score}</span> corrent! Either this quiz is too easy or you play too much League!`,
+    Diamond: `Well done! You managed to get <span class="text-success">${score}</span> correct! You're in the top 2% of players!`,
+    Master: `Way to go! You managed to get <span class="text-success">${score}</span> correct! You've reached Elite tier and are in the top 0.3% of players now!`,
+    Grandmaster: `Fantastic! You managed to get <span class="text-success">${score}</span> correct! You're one of the top 1000 players now!`,
+    Challenger: `Congratulations! You managed to get <span class="text-success">${score}</span> correct! Either this quiz is too easy or you play too much League!`,
   };
 
   const imgCard = document.querySelector("#img-card");
   const scoreSpan = document.getElementById("score");
-  const resultRank = document.querySelector("#result-rank");
+  const resultRank = document.getElementById("result-rank");
 
   imgCard.innerHTML = `
             <img src="images/rank_emblems/${tier}.png" class="h-100" />
@@ -130,15 +174,13 @@ const generateResultsScreen = async (tier) => {
                 ${resultMessages[tier]}
             </h5>
         `;
-  
+
   scoreSpan.textContent = score;
-  resultRank.textContent = `Your rank is ${tier}`
-}
+  resultRank.textContent = `Your rank is ${tier}`;
+};
 
 const lose = async () => {
-  const scoreSpan = document.getElementById("score");
   const btn_wrapper = document.getElementById("btn-wrapper");
-  const imgCard = document.querySelector("#img-card");
   const restart = document.createElement("button");
 
   if (score <= scoreTiers.Iron) {
@@ -163,11 +205,9 @@ const lose = async () => {
 
   restart.classList.add("btn", "btn-success", "my-2", "w-50", "mx-auto");
   restart.textContent = "Try Again";
-  restart.addEventListener("click", () => {
+  restart.addEventListener("click", async () => {
     score = 0;
-    btn_wrapper.innerHTML = "";
-    imgCard.innerHTML = "";
-    scoreSpan.textContent = score;
+    await resetState();
     run();
   });
 
