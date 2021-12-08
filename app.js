@@ -12,18 +12,6 @@ const scoreTiers = {
   Challenger: 50,
 };
 
-const resultMessages = {
-  Iron: `Yikes! You only got a score of <span class="text-success">${score}</span>! You're in the bottom 1% of players...`,
-  Bronze: `Oof! You only got <span class="text-success">${score}</span> right! At least you're not Iron...`,
-  Silver: `Not bad! You got <span class="text-success">${score}</span> correct! You scored similarly to the average player!`,
-  Gold: `Good job! You got <span class="text-success">${score}</span> correct! You are better than 59% of all players!`,
-  Platinum: `Great job! You got <span class="text-success">${score}</span> right! You've reached Skilled tier and are in the top 10% of players now!`,
-  Diamond: `Well done! You managed to get <span class="text-success">${score}</span> corrent! You're in the top 2% of players!`,
-  Master: `Way to go! You managed to get <span class="text-success">${score}</span> corrent! You've reached Elite tier and are in the top 0.3% of players now!`,
-  Grandmaster: `Fantastic! You managed to get <span class="text-success">${score}</span> corrent! You're one of the top 1000 players now!`,
-  Challenger: `Congratulations! You managed to get <span class="text-success">${score}</span> corrent! Either this quiz is too easy or you play too much League!`,
-};
-
 const getChampionNames = async () => {
   const url =
     "https://ddragon.leagueoflegends.com/cdn/11.23.1/data/en_US/champion.json";
@@ -120,14 +108,30 @@ const win = () => {
 };
 
 const generateResultsScreen = async (tier) => {
+  const resultMessages = {
+    Iron: `Yikes! You only got a score of <span class="text-success">${score}</span>! You're in the bottom 1% of players...`,
+    Bronze: `Oof! You only got <span class="text-success">${score}</span> right! At least you're not Iron...`,
+    Silver: `Not bad! You got <span class="text-success">${score}</span> correct! You scored similarly to the average player!`,
+    Gold: `Good job! You got <span class="text-success">${score}</span> correct! You are better than 59% of all players!`,
+    Platinum: `Great job! You got <span class="text-success">${score}</span> right! You've reached Skilled tier and are in the top 10% of players now!`,
+    Diamond: `Well done! You managed to get <span class="text-success">${score}</span> corrent! You're in the top 2% of players!`,
+    Master: `Way to go! You managed to get <span class="text-success">${score}</span> corrent! You've reached Elite tier and are in the top 0.3% of players now!`,
+    Grandmaster: `Fantastic! You managed to get <span class="text-success">${score}</span> corrent! You're one of the top 1000 players now!`,
+    Challenger: `Congratulations! You managed to get <span class="text-success">${score}</span> corrent! Either this quiz is too easy or you play too much League!`,
+  };
+
   const imgCard = document.querySelector("#img-card");
+  const scoreSpan = document.getElementById("score");
   const resultRank = document.querySelector("#result-rank");
+
   imgCard.innerHTML = `
             <img src="images/rank_emblems/${tier}.png" class="h-100" />
              <h5 class="text-center text-light">
                 ${resultMessages[tier]}
             </h5>
         `;
+  
+  scoreSpan.textContent = score;
   resultRank.textContent = `Your rank is ${tier}`
 }
 
@@ -156,7 +160,6 @@ const lose = async () => {
   } else {
     await generateResultsScreen("Challenger");
   }
-  scoreSpan.textContent = score;
 
   restart.classList.add("btn", "btn-success", "my-2", "w-50", "mx-auto");
   restart.textContent = "Try Again";
