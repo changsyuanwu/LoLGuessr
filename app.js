@@ -1,5 +1,5 @@
 const numOptions = 4;
-let score = 50;
+let score = 0;
 const winScore = 5;
 const scoreTiers = {
   Iron: 5,
@@ -11,6 +11,18 @@ const scoreTiers = {
   Master: 35,
   Grandmaster: 40,
   Challenger: 50,
+};
+
+const manualNameCorrections = async (champNames) => {
+  const nameCorrections = {
+    Fiddlesticks: "FiddleSticks",
+  };
+
+  champNames.map((name) => {
+    name = nameCorrections[name];
+  });
+
+  return champNames;
 };
 
 const getChampionNames = async () => {
@@ -56,12 +68,14 @@ const getChampionImage = async (champName, skinNum) => {
 };
 
 const run = async () => {
-  const champs = await getRandomChampions();
-  const champName = champs[Math.floor(Math.random() * champs.length)];
-  const json = await getChampionJson(champName);
+  const champNames = await getRandomChampions()
+  const champs = await manualNameCorrections(champNames);
+  
+  const correctChampName = champs[Math.floor(Math.random() * champs.length)];
+  const json = await getChampionJson(correctChampName);
   const skins = json.skins;
   const randSkinObj = skins[Math.floor(Math.random() * skins.length)];
-  await getChampionImage(champName, randSkinObj.num);
+  await getChampionImage(correctChampName, randSkinObj.num);
 
   const btn_wrapper = document.getElementById("btn-wrapper");
 
@@ -70,7 +84,7 @@ const run = async () => {
     btn.classList.add("btn", "btn-info", "w-100", "my-2", "option-btn");
     btn.textContent = champ;
 
-    if (champ === champName) {
+    if (champ === correctChampName) {
       btn.id = "correct";
     }
 
@@ -107,10 +121,12 @@ const resetState = async () => {
   const btn_wrapper = document.getElementById("btn-wrapper");
   const imgCard = document.querySelector("#img-card");
   const resultRank = document.getElementById("result-rank");
+  const instructions = document.getElementById("instructions");
   btn_wrapper.innerHTML = "";
   imgCard.innerHTML = "";
   scoreSpan.textContent = score;
   resultRank.innerHTML = "";
+  instructions.innerHTML = "";
 };
 
 const win = async () => {
@@ -121,7 +137,8 @@ const win = async () => {
 
   await generateResultsScreen("Challenger");
 
-  instructions.textContent = "You can now choose to climb again or continue playing."
+  instructions.textContent =
+    "You can now choose to climb again or continue playing.";
 
   continuePlaying.classList.add(
     "btn",
