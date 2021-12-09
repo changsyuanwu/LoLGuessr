@@ -2,14 +2,14 @@ const numOptions = 4;
 let score = 0;
 const winScore = 50;
 const scoreTiers = {
-  Iron: 5,
+  Iron: 3,               
   Bronze: 10,
-  Silver: 15,
-  Gold: 20,
-  Platinum: 25,
-  Diamond: 30,
-  Master: 35,
-  Grandmaster: 40,
+  Silver: 23,
+  Gold: 33,
+  Platinum: 40,
+  Diamond: 45,
+  Master: 47,
+  Grandmaster: 49,
   Challenger: 50,
 };
 
