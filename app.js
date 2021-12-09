@@ -115,7 +115,14 @@ const run = async () => {
   });
 };
 
-run();
+const updateHighscore = async () => {
+  const highscoreSpan = document.getElementById("highscore");
+  const currentHighscore = localStorage.getItem("highscore");
+  if (currentHighscore === "" || currentHighscore < score) {
+    localStorage.setItem("highscore", score);
+  }
+  highscoreSpan.textContent = localStorage.getItem("highscore");
+}
 
 const resetState = async () => {
   const scoreSpan = document.getElementById("score");
@@ -224,6 +231,8 @@ const lose = async () => {
     await generateResultsScreen("Challenger");
   }
 
+  await updateHighscore();
+
   restart.classList.add("btn", "btn-success", "my-2", "w-50", "mx-auto");
   restart.textContent = "Try Again";
   restart.addEventListener("click", async () => {
@@ -235,3 +244,6 @@ const lose = async () => {
   btn_wrapper.innerHTML = "";
   btn_wrapper.append(restart);
 };
+
+updateHighscore();
+run();
