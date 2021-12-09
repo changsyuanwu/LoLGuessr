@@ -121,9 +121,7 @@ const updateHighscore = async () => {
   if (currentHighscore === "" || currentHighscore < score) {
     localStorage.setItem("highscore", score);
   }
-  if (currentHighscore === "") {
-    highscoreSpan.textContent = localStorage.getItem("highscore");
-  }
+  highscoreSpan.textContent = localStorage.getItem("highscore");
 }
 
 const resetState = async () => {
