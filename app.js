@@ -26,6 +26,14 @@ const manualNameCorrections = async (champNames) => {
   return champNames;
 };
 
+const getGameVersions = async () => {
+  const url = "https://ddragon.leagueoflegends.com/api/versions.json";
+  const res = await fetch(url);
+  const json = await res.json();
+  console.log(json);
+  return json;
+};
+
 const getChampionNames = async () => {
   const url =
     "https://ddragon.leagueoflegends.com/cdn/11.23.1/data/en_US/champion.json";
