@@ -19,7 +19,7 @@ const manualNameCorrections = async (champNames) => {
   };
 
   champNames.map((name) => {
-    if (nameCorrections[name])
+    if (nameCorrections.hasOwnProperty(name))
       return nameCorrections[name];
   });
 
