@@ -19,11 +19,14 @@ const manualAPINameCorrections = async (champNames) => {
     Fiddlesticks: "FiddleSticks",
   };
 
-  return champNames.map((name) => {
+  const correctedChampNames = champNames.map((name) => {
     if (nameCorrections.hasOwnProperty(name)) {
       return nameCorrections[name];
     }
+    return name;
   });
+
+  return correctedChampNames;
 };
 
 const manualDisplayNameCorrections = (champName) => {
