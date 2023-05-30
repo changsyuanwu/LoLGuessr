@@ -42,6 +42,7 @@ const manualDisplayNameCorrections = (champName) => {
     Leblanc: "LeBlanc",
     Nunu: "Nunu & Willump",
     RekSai: "Rek'Sai",
+    Renata: "Renata Glasc",
     Velkoz: "Vel'Koz",
     MonkeyKing: "Wukong",
   };
