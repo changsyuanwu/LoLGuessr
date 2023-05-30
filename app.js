@@ -2,7 +2,7 @@ const numOptions = 4;
 let score = 0;
 const winScore = 50;
 const scoreTiers = {
-  Iron: 3,               
+  Iron: 3,
   Bronze: 10,
   Silver: 23,
   Gold: 33,
@@ -13,17 +13,41 @@ const scoreTiers = {
   Challenger: 50,
 };
 
-const manualNameCorrections = async (champNames) => {
+const manualAPINameCorrections = async (champNames) => {
   const nameCorrections = {
     Fiddlesticks: "FiddleSticks",
   };
 
   champNames.map((name) => {
-    if (nameCorrections.hasOwnProperty(name))
-      return nameCorrections[name];
+    if (nameCorrections.hasOwnProperty(name)) return nameCorrections[name];
   });
 
   return champNames;
+};
+
+const manualDisplayNameCorrections = (champName) => {
+  const nameCorrections = {
+    Belveth: "Bel'Veth",
+    Chogath: "Cho'Gath",
+    DrMundo: "Dr. Mundo",
+    JarvanIV: "Jarvan IV",
+    Kaisa: "Kai'Sa",
+    Khazix: "Kha'Zix",
+    KogMaw: "Kog'Maw",
+    KSante: "K'Sante",
+    Leblanc: "LeBlanc",
+    Nunu: "Nunu & Willump",
+    RekSai: "Rek'Sai",
+    Velkoz: "Vel'Koz",
+    MonkeyKing: "Wukong",
+  };
+
+  if (nameCorrections.hasOwnProperty(champName)) {
+    return nameCorrections[champName];
+  }
+
+  // Insert space before capital letters
+  return champNames.replace(/([A-Z])/g, " $1").trim();
 };
 
 const getGameVersions = async () => {
@@ -77,9 +101,9 @@ const getChampionImage = async (champName, skinNum) => {
 };
 
 const run = async () => {
-  const champNames = await getRandomChampions()
-  const champs = await manualNameCorrections(champNames);
-  
+  const champNames = await getRandomChampions();
+  const champs = await manualAPINameCorrections(champNames);
+
   const correctChampName = champs[Math.floor(Math.random() * champs.length)];
   const json = await getChampionJson(correctChampName);
   const skins = json.skins;
@@ -91,7 +115,7 @@ const run = async () => {
   champs.forEach((champ) => {
     const btn = document.createElement("button");
     btn.classList.add("btn", "btn-info", "w-100", "my-2", "option-btn");
-    btn.textContent = champ;
+    btn.textContent = manualDisplayNameCorrections(champ);
 
     if (champ === correctChampName) {
       btn.id = "correct";
@@ -130,7 +154,7 @@ const updateHighscore = async () => {
     localStorage.setItem("highscore", score);
   }
   highscoreSpan.textContent = localStorage.getItem("highscore");
-}
+};
 
 const resetState = async () => {
   const scoreSpan = document.getElementById("score");
