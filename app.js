@@ -36,7 +36,7 @@ const getGameVersions = async () => {
 
 const getChampionNames = async () => {
   const url =
-    "https://ddragon.leagueoflegends.com/cdn/11.23.1/data/en_US/champion.json";
+    "https://ddragon.leagueoflegends.com/cdn/13.10.1/data/en_US/champion.json";
   const res = await fetch(url);
   const json = await res.json();
   return Object.keys(json.data);
