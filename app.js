@@ -50,17 +50,17 @@ const manualDisplayNameCorrections = (champName) => {
   return champNames.replace(/([A-Z])/g, " $1").trim();
 };
 
-const getGameVersions = async () => {
+const getLatestGameVersion = async () => {
   const url = "https://ddragon.leagueoflegends.com/api/versions.json";
   const res = await fetch(url);
   const json = await res.json();
-  console.log(json);
-  return json;
+
+  return json[0];
 };
 
 const getChampionNames = async () => {
   const url =
-    "https://ddragon.leagueoflegends.com/cdn/13.10.1/data/en_US/champion.json";
+    `https://ddragon.leagueoflegends.com/cdn/${getLatestGameVersion()}/data/en_US/champion.json`;
   const res = await fetch(url);
   const json = await res.json();
   return Object.keys(json.data);
