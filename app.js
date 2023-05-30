@@ -1,5 +1,6 @@
 const numOptions = 4;
 let score = 0;
+let lastestGameVersion = "13.10.1";
 const winScore = 50;
 const scoreTiers = {
   Iron: 3,
@@ -47,20 +48,18 @@ const manualDisplayNameCorrections = (champName) => {
   }
 
   // Insert space before capital letters
-  return champNames.replace(/([A-Z])/g, " $1").trim();
+  return champName.replace(/([A-Z])/g, " $1").trim();
 };
 
 const getLatestGameVersion = async () => {
   const url = "https://ddragon.leagueoflegends.com/api/versions.json";
   const res = await fetch(url);
   const json = await res.json();
-
   return json[0];
 };
 
 const getChampionNames = async () => {
-  const url =
-    `https://ddragon.leagueoflegends.com/cdn/${getLatestGameVersion()}/data/en_US/champion.json`;
+  const url = `https://ddragon.leagueoflegends.com/cdn/${lastestGameVersion}/data/en_US/champion.json`;
   const res = await fetch(url);
   const json = await res.json();
   return Object.keys(json.data);
@@ -79,7 +78,7 @@ async function getRandomChampions() {
 }
 
 const getChampionJson = async (champName) => {
-  const url = `https://ddragon.leagueoflegends.com/cdn/11.23.1/data/en_US/champion/${champName}.json`;
+  const url = `https://ddragon.leagueoflegends.com/cdn/${lastestGameVersion}/data/en_US/champion/${champName}.json`;
   const res = await fetch(url);
   const json = await res.json();
   return json.data[champName];
@@ -101,6 +100,7 @@ const getChampionImage = async (champName, skinNum) => {
 };
 
 const run = async () => {
+  lastestGameVersion =  await getLatestGameVersion();
   const champNames = await getRandomChampions();
   const champs = await manualAPINameCorrections(champNames);
 
