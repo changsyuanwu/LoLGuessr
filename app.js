@@ -1,6 +1,7 @@
 const numOptions = 4;
 let score = 0;
-let lastestGameVersion = "13.10.1";
+let latestGameVersion = "14.21.1";
+let correctOptionNumber = 0;
 const winScore = 50;
 const scoreTiers = {
   Iron: 3,
@@ -63,7 +64,7 @@ const getLatestGameVersion = async () => {
 };
 
 const getChampionNames = async () => {
-  const url = `https://ddragon.leagueoflegends.com/cdn/${lastestGameVersion}/data/en_US/champion.json`;
+  const url = `https://ddragon.leagueoflegends.com/cdn/${latestGameVersion}/data/en_US/champion.json`;
   const res = await fetch(url);
   const json = await res.json();
   return Object.keys(json.data);
@@ -82,7 +83,7 @@ async function getRandomChampions() {
 }
 
 const getChampionJson = async (champName) => {
-  const url = `https://ddragon.leagueoflegends.com/cdn/${lastestGameVersion}/data/en_US/champion/${champName}.json`;
+  const url = `https://ddragon.leagueoflegends.com/cdn/${latestGameVersion}/data/en_US/champion/${champName}.json`;
   const res = await fetch(url);
   const json = await res.json();
   return json.data[champName];
@@ -104,7 +105,7 @@ const getChampionImage = async (champName, skinNum) => {
 };
 
 const run = async () => {
-  lastestGameVersion =  await getLatestGameVersion();
+  latestGameVersion =  await getLatestGameVersion();
   const champNames = await getRandomChampions();
   const champs = await manualAPINameCorrections(champNames);
 
@@ -116,13 +117,14 @@ const run = async () => {
 
   const btn_wrapper = document.getElementById("btn-wrapper");
 
-  champs.forEach((champ) => {
+  champs.forEach((champ, index) => {
     const btn = document.createElement("button");
     btn.classList.add("btn", "btn-info", "w-100", "my-2", "option-btn");
     btn.textContent = manualDisplayNameCorrections(champ);
+    btn.id = index;
 
     if (champ === correctChampName) {
-      btn.id = "correct";
+      correctOptionNumber = index;
     }
 
     const content = `
@@ -137,7 +139,7 @@ const run = async () => {
 
   btns.forEach((btn) => {
     btn.addEventListener("click", () => {
-      if (btn.id === "correct") {
+      if (parseInt(btn.id) === correctOptionNumber) {
         score++;
         if (score === winScore) {
           win();
@@ -281,5 +283,33 @@ const lose = async () => {
   btn_wrapper.append(restart);
 };
 
+const clickCorrespondingBtn = async (btnId) => {
+  const optionBtns = document.getElementsByClassName("option-btn");
+  const correspondingBtn = optionBtns.namedItem(btnId);
+  correspondingBtn.click();
+}
+
+const handleKeyUp = async (e) => {
+  switch (e.key) {
+    case "1":
+      clickCorrespondingBtn("3");
+      break;
+    case "2":
+      clickCorrespondingBtn("2");
+      break;
+    case "3":
+      clickCorrespondingBtn("1");
+      break;
+    case "4":
+      clickCorrespondingBtn("0");
+      break;
+  }
+};
+
+const addKeyupListener = async () => {
+  document.addEventListener("keyup", handleKeyUp);
+}
+
 updateHighscore();
 run();
+addKeyupListener();
