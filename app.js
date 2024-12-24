@@ -15,7 +15,7 @@ const scoreTiers = {
   Challenger: 50,
 };
 
-const manualSkinAssetNameCorrections = async (champName) => {
+const manualSkinAssetNameCorrections = (champName) => {
   const nameCorrections = {
     Fiddlesticks: "FiddleSticks",
   };
@@ -32,7 +32,6 @@ const manualDisplayNameCorrections = (champName) => {
     Belveth: "Bel'Veth",
     Chogath: "Cho'Gath",
     DrMundo: "Dr. Mundo",
-    FiddleSticks: "Fiddlesticks",
     JarvanIV: "Jarvan IV",
     Kaisa: "Kai'Sa",
     Khazix: "Kha'Zix",
@@ -68,7 +67,7 @@ const getChampionNames = async () => {
   return Object.keys(json.data);
 };
 
-async function getRandomChampions() {
+const getRandomChampions = async () => {
   const champNames = await getChampionNames();
   let champs = [];
   while (champs.length < numOptions) {
@@ -78,7 +77,7 @@ async function getRandomChampions() {
     }
   }
   return champs;
-}
+};
 
 const getChampionJson = async (champName) => {
   const url = `https://ddragon.leagueoflegends.com/cdn/${latestGameVersion}/data/en_US/champion/${champName}.json`;
@@ -87,29 +86,37 @@ const getChampionJson = async (champName) => {
   return json.data[champName];
 };
 
-const getRandomImageType = async () => {
+const getRandomImageType = () => {
   const imageTypes = ["centered", "loading", "tiles"];
   return imageTypes[Math.floor(Math.random() * imageTypes.length)];
 };
 
-const getChampionImage = async (champName, skinNum) => {
-  let img = new Image();
-  const imageType = await getRandomImageType();
+const getChampionImageUrl = (champName, skinNum) => {
+  const imageType = getRandomImageType();
   const url = `https://ddragon.leagueoflegends.com/cdn/img/champion/${imageType}/${champName}_${skinNum}.jpg`;
-  const imgCard = document.querySelector("#img-card");
-  imgCard.append(img);
-  img.src = url;
-  img.classList.add("h-100");
+  return url;
 };
 
+const showChampionImage = async (imageUrl) => {
+  const img = new Image();
+  const imgCard = document.querySelector("#img-card");
+  imgCard.append(img);
+  img.src = imageUrl;
+  img.classList.add("h-100");
+}
+
 const run = async () => {
-  latestGameVersion =  await getLatestGameVersion();
+  latestGameVersion = await getLatestGameVersion();
   const champs = await getRandomChampions();
-  const correctChampName = await manualSkinAssetNameCorrections(champs[Math.floor(Math.random() * champs.length)]);
+  const correctChampName = champs[Math.floor(Math.random() * champs.length)];
   const json = await getChampionJson(correctChampName);
   const skins = json.skins;
   const randSkinObj = skins[Math.floor(Math.random() * skins.length)];
-  await getChampionImage(correctChampName, randSkinObj.num);
+  const champImageUrl = getChampionImageUrl(
+    manualSkinAssetNameCorrections(correctChampName),
+    randSkinObj.num
+  );
+  showChampionImage(champImageUrl);
 
   const btn_wrapper = document.getElementById("btn-wrapper");
 
