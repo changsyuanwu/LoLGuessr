@@ -15,7 +15,7 @@ const scoreTiers = {
   Challenger: 50,
 };
 
-const manualAPINameCorrections = async (champNames) => {
+const manualSkinAssetNameCorrections = async (champNames) => {
   const nameCorrections = {
     Fiddlesticks: "FiddleSticks",
   };
@@ -106,10 +106,8 @@ const getChampionImage = async (champName, skinNum) => {
 
 const run = async () => {
   latestGameVersion =  await getLatestGameVersion();
-  const champNames = await getRandomChampions();
-  const champs = await manualAPINameCorrections(champNames);
-
-  const correctChampName = champs[Math.floor(Math.random() * champs.length)];
+  const champs = await getRandomChampions();
+  const correctChampName = await manualSkinAssetNameCorrections(champs[Math.floor(Math.random() * champs.length)]);
   const json = await getChampionJson(correctChampName);
   const skins = json.skins;
   const randSkinObj = skins[Math.floor(Math.random() * skins.length)];
