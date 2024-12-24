@@ -15,19 +15,16 @@ const scoreTiers = {
   Challenger: 50,
 };
 
-const manualSkinAssetNameCorrections = async (champNames) => {
+const manualSkinAssetNameCorrections = async (champName) => {
   const nameCorrections = {
     Fiddlesticks: "FiddleSticks",
   };
 
-  const correctedChampNames = champNames.map((name) => {
-    if (nameCorrections.hasOwnProperty(name)) {
-      return nameCorrections[name];
-    }
-    return name;
-  });
+  if (nameCorrections.hasOwnProperty(champName)) {
+    return nameCorrections[champName];
+  }
 
-  return correctedChampNames;
+  return champName;
 };
 
 const manualDisplayNameCorrections = (champName) => {
@@ -35,6 +32,7 @@ const manualDisplayNameCorrections = (champName) => {
     Belveth: "Bel'Veth",
     Chogath: "Cho'Gath",
     DrMundo: "Dr. Mundo",
+    FiddleSticks: "Fiddlesticks",
     JarvanIV: "Jarvan IV",
     Kaisa: "Kai'Sa",
     Khazix: "Kha'Zix",
