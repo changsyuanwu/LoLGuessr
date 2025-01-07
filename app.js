@@ -97,7 +97,7 @@ const getChampionImageUrl = (champName, skinNum) => {
   return url;
 };
 
-const showChampionImage = async (imageUrl) => {
+const showImage = async (imageUrl) => {
   const img = new Image();
   const imgCard = document.querySelector("#img-card");
   imgCard.append(img);
@@ -116,7 +116,7 @@ const run = async () => {
     manualSkinAssetNameCorrections(correctChampName),
     randSkinObj.num
   );
-  showChampionImage(champImageUrl);
+  showImage(champImageUrl);
 
   const btn_wrapper = document.getElementById("btn-wrapper");
 
@@ -157,7 +157,7 @@ const run = async () => {
 };
 
 const updateHighscore = async () => {
-  const highscoreSpan = document.getElementById("highscore");
+  const highscoreSpan = document.getElementById("highscore-span");
   const currentHighscore = localStorage.getItem("highscore");
   if (currentHighscore === "" || currentHighscore < score) {
     localStorage.setItem("highscore", score);
@@ -166,16 +166,19 @@ const updateHighscore = async () => {
 };
 
 const resetState = async () => {
-  const scoreSpan = document.getElementById("score");
+  const scoreSpan = document.getElementById("score-span");
   const btn_wrapper = document.getElementById("btn-wrapper");
   const imgCard = document.querySelector("#img-card");
   const resultRank = document.getElementById("result-rank");
   const instructions = document.getElementById("instructions");
+  const resultMessage = document.getElementById("result-message");
+
+  scoreSpan.textContent = score;
   btn_wrapper.innerHTML = "";
   imgCard.innerHTML = "";
-  scoreSpan.textContent = score;
   resultRank.innerHTML = "";
   instructions.innerHTML = "";
+  resultMessage.innerHTML = "";
 };
 
 const win = async () => {
@@ -222,28 +225,25 @@ const correct = async () => {
 
 const generateResultsScreen = async (tier) => {
   const resultMessages = {
-    Iron: `Yikes! You only got a score of <span class="text-success">${score}</span>! You're in the bottom 1% of players...`,
-    Bronze: `Oof! You only got <span class="text-success">${score}</span> right! At least you're not Iron...`,
-    Silver: `Not bad! You got <span class="text-success">${score}</span> correct! You scored similarly to the average player!`,
-    Gold: `Good job! You got <span class="text-success">${score}</span> correct! You are better than 59% of all players!`,
-    Platinum: `Great job! You got <span class="text-success">${score}</span> right! You've reached Skilled tier and are in the top 10% of players now!`,
-    Diamond: `Well done! You managed to get <span class="text-success">${score}</span> correct! You're in the top 2% of players!`,
-    Master: `Way to go! You managed to get <span class="text-success">${score}</span> correct! You've reached Elite tier and are in the top 0.3% of players now!`,
-    Grandmaster: `Fantastic! You managed to get <span class="text-success">${score}</span> correct! You're one of the top 1000 players now!`,
-    Challenger: `Congratulations! You managed to get <span class="text-success">${score}</span> correct! Either this quiz is too easy or you play too much League!`,
+    Iron: `Yikes! You only got a score of ${score}! You're in the bottom 1% of players...`,
+    Bronze: `Oof! You only got ${score} right! At least you're not Iron...`,
+    Silver: `Not bad! You got ${score} correct! You scored similarly to the average player!`,
+    Gold: `Good job! You got ${score} correct! You are better than 59% of all players!`,
+    Platinum: `Great job! You got ${score} right! You've reached Skilled tier and are in the top 10% of players now!`,
+    Diamond: `Well done! You managed to get ${score} correct! You're in the top 2% of players!`,
+    Master: `Way to go! You managed to get ${score} correct! You've reached Elite tier and are in the top 0.3% of players now!`,
+    Grandmaster: `Fantastic! You managed to get ${score} correct! You're one of the top 1000 players now!`,
+    Challenger: `Congratulations! You managed to get ${score} correct! Either this quiz is too easy or you play too much League!`,
   };
 
   const imgCard = document.querySelector("#img-card");
-  const scoreSpan = document.getElementById("score");
+  const scoreSpan = document.getElementById("score-span");
   const resultRank = document.getElementById("result-rank");
+  const resultMessage = document.getElementById("result-message");
 
-  imgCard.innerHTML = `
-            <img src="images/rank_emblems/${tier}.png" class="h-100" />
-             <h5 class="text-center text-light">
-                ${resultMessages[tier]}
-            </h5>
-        `;
-
+  imgCard.innerHTML = "";
+  showImage(`images/rank_emblems/${tier}.png`);
+  resultMessage.textContent = resultMessages[tier];
   scoreSpan.textContent = score;
   resultRank.textContent = `Your rank is ${tier}`;
 };

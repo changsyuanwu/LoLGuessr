@@ -3,15 +3,36 @@
 }
 
 .image-wrapper {
-    height: 600px;
+    height: 500px;
 }
 
 .page-wrapper {
     min-height: 100vh;
     height: 100%;
     background: rgb(7, 18, 26);
+    padding: 1em;
 }
 
 #btn-wrapper {
     margin-bottom: 1rem;
+}
+
+#instructions {
+    font-size: 1.5rem;
+}
+
+#result-rank {
+    font-size: 2rem;
+}
+
+#score {
+    font-size: 1.75rem;
+}
+
+#highscore {
+    font-size: 1.25rem;
+}
+
+p {
+  margin: 0em;
 }
