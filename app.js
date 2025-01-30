@@ -237,9 +237,9 @@ const generateResultsScreen = async (tier) => {
     Bronze: `Oof! You only got ${score} right! At least you're not Iron...`,
     Silver: `Not bad! You got ${score} correct! You scored similarly to the average player!`,
     Gold: `Good job! You got ${score} correct! You are better than 59% of all players!`,
-    Platinum: `Great job! You got ${score} right! You've reached Skilled tier and are in the top 10% of players now!`,
+    Platinum: `Great job! You got ${score} right! You are in the top 10% of players now!`,
     Diamond: `Well done! You managed to get ${score} correct! You're in the top 2% of players!`,
-    Master: `Way to go! You managed to get ${score} correct! You've reached Elite tier and are in the top 0.3% of players now!`,
+    Master: `Way to go! You managed to get ${score} correct! You are in the top 0.3% of players now!`,
     Grandmaster: `Fantastic! You managed to get ${score} correct! You're one of the top 1000 players now!`,
     Challenger: `Congratulations! You managed to get ${score} correct! Either this quiz is too easy or you play too much League!`,
   };
