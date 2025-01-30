@@ -14,6 +14,7 @@ const scoreTiers = {
   Grandmaster: 49,
   Challenger: 50,
 };
+const recentChampions = [];
 
 const manualSkinAssetNameCorrections = (champName) => {
   const nameCorrections = {
@@ -72,8 +73,15 @@ const getRandomChampions = async () => {
   let champs = [];
   while (champs.length < numOptions) {
     const randChamp = champNames[Math.floor(Math.random() * champNames.length)];
-    if (!champs.includes(randChamp)) {
+    // Ensure no duplicate or recent champions
+    // This also prevents recent skins from showing up
+    if (!champs.includes(randChamp) && !recentChampions.includes(randChamp)) {
       champs.push(randChamp);
+      recentChampions.push(randChamp);
+      // Limit recent champions to the 40 most recent (last 10 rounds)
+      if (recentChampions.length >= 40) {
+        recentChampions.shift();
+      }
     }
   }
   return champs;
