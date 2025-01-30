@@ -78,7 +78,7 @@ const getRandomChampions = async () => {
     if (!champs.includes(randChamp) && !recentChampions.includes(randChamp)) {
       champs.push(randChamp);
       recentChampions.push(randChamp);
-      // Limit recent champions to the 40 most recent (last 10 rounds)
+      // The 40 most recent champions cannot be selected (last 10 rounds)
       if (recentChampions.length >= 40) {
         recentChampions.shift();
       }
