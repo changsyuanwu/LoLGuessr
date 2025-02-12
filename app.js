@@ -2,17 +2,47 @@ const numOptions = 4;
 let score = 0;
 let latestGameVersion = "14.21.1";
 let correctOptionNumber = 0;
-const winScore = 50;
-const scoreTiers = {
-  Iron: 3,
-  Bronze: 10,
-  Silver: 23,
-  Gold: 33,
-  Platinum: 40,
-  Diamond: 45,
-  Master: 47,
-  Grandmaster: 49,
-  Challenger: 50,
+const resultTiers = {
+  Iron: {
+    score: 17, // This is the highest score within this tier
+    message: `Yikes! You only got a score of ${score}! Someone needs to play more League of Legends...`,
+  },
+  Bronze: {
+    score: 35,
+    message: `Oof! You only got ${score} right! At least you're not Iron...`,
+  },
+  Silver: {
+    score: 55,
+    message: `Not bad! You got ${score} correct! You scored similarly to the average player!`,
+  },
+  Gold: {
+    score: 72,
+    message: `Good job! You got ${score} correct! You're in the top half of all players!`,
+  },
+  Platinum: {
+    score: 85,
+    message: `Great job! You got ${score} right! You are in the top quarter of all players!`,
+  },
+  Emerald: {
+    score: 94,
+    message: `Well done! You managed to get ${score} correct! You're in the top 15% of all players!`,
+  },
+  Diamond: {
+    score: 97,
+    message: `Way to go! You managed to get ${score} correct! You are in the top 5% of all players now!`,
+  },
+  Master: {
+    score: 98,
+    message: `Fantastic! You managed to get ${score} correct! You're good enough to go professional!`,
+  },
+  Grandmaster: {
+    score: 99,
+    message: `Amazing! You managed to get ${score} correct! You're in the top 0.5% of players but just a hair away from perfect!`,
+  },
+  Challenger: {
+    score: 100,
+    message: `Congratulations! You managed to get ${score} correct! You've aced this quiz! Either this quiz is too easy or you play too much League!`,
+  },
 };
 const recentChampions = [];
 
@@ -152,7 +182,7 @@ const run = async () => {
     btn.addEventListener("click", () => {
       if (parseInt(btn.id) === correctOptionNumber) {
         score++;
-        if (score === winScore) {
+        if (score === resultTiers.Challenger.score) {
           win();
         } else {
           correct();
@@ -198,7 +228,7 @@ const win = async () => {
   await generateResultsScreen("Challenger");
 
   instructions.textContent =
-    "You can now choose to climb again or continue playing.";
+    "You can now choose to climb again or continue playing in endless mode.";
 
   continuePlaying.classList.add(
     "btn",
@@ -232,17 +262,6 @@ const correct = async () => {
 };
 
 const generateResultsScreen = async (tier) => {
-  const resultMessages = {
-    Iron: `Yikes! You only got a score of ${score}! You're in the bottom 1% of players...`,
-    Bronze: `Oof! You only got ${score} right! At least you're not Iron...`,
-    Silver: `Not bad! You got ${score} correct! You scored similarly to the average player!`,
-    Gold: `Good job! You got ${score} correct! You are better than 59% of all players!`,
-    Platinum: `Great job! You got ${score} right! You are in the top 10% of players now!`,
-    Diamond: `Well done! You managed to get ${score} correct! You're in the top 2% of players!`,
-    Master: `Way to go! You managed to get ${score} correct! You are in the top 0.3% of players now!`,
-    Grandmaster: `Fantastic! You managed to get ${score} correct! You're one of the top 1000 players now!`,
-    Challenger: `Congratulations! You managed to get ${score} correct! Either this quiz is too easy or you play too much League!`,
-  };
 
   const imgCard = document.querySelector("#img-card");
   const scoreSpan = document.getElementById("score-span");
@@ -250,8 +269,8 @@ const generateResultsScreen = async (tier) => {
   const resultMessage = document.getElementById("result-message");
 
   imgCard.innerHTML = "";
-  showImage(`images/rank_emblems/${tier}.png`);
-  resultMessage.textContent = resultMessages[tier];
+  showImage(`images/rank_emblems/${tier}.webp`);
+  resultMessage.textContent = resultTiers[tier].message;
   scoreSpan.textContent = score;
   resultRank.textContent = `Your rank is ${tier}`;
 };
@@ -260,21 +279,23 @@ const lose = async () => {
   const btn_wrapper = document.getElementById("btn-wrapper");
   const restart = document.createElement("button");
 
-  if (score <= scoreTiers.Iron) {
+  if (score <= resultTiers.Iron.score) {
     await generateResultsScreen("Iron");
-  } else if (score <= scoreTiers.Bronze) {
+  } else if (score <= resultTiers.Bronze.score) {
     await generateResultsScreen("Bronze");
-  } else if (score <= scoreTiers.Silver) {
+  } else if (score <= resultTiers.Silver.score) {
     await generateResultsScreen("Silver");
-  } else if (score <= scoreTiers.Gold) {
+  } else if (score <= resultTiers.Gold.score) {
     await generateResultsScreen("Gold");
-  } else if (score <= scoreTiers.Platinum) {
+  } else if (score <= resultTiers.Platinum.score) {
     await generateResultsScreen("Platinum");
-  } else if (score <= scoreTiers.Diamond) {
+  } else if (score <= resultTiers.Emerald.score) {
+    await generateResultsScreen("Emerald");
+  } else if (score <= resultTiers.Diamond.score) {
     await generateResultsScreen("Diamond");
-  } else if (score <= scoreTiers.Master) {
+  } else if (score <= resultTiers.Master.score) {
     await generateResultsScreen("Master");
-  } else if (score <= scoreTiers.Grandmaster) {
+  } else if (score <= resultTiers.Grandmaster.score) {
     await generateResultsScreen("Grandmaster");
   } else {
     await generateResultsScreen("Challenger");
