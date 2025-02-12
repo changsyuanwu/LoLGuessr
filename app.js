@@ -5,43 +5,43 @@ let correctOptionNumber = 0;
 const resultTiers = {
   Iron: {
     score: 17, // This is the highest score within this tier
-    message: `Yikes! You only got a score of ${score}! Someone needs to play more League of Legends...`,
+    message: `Someone needs to play more League of Legends...`,
   },
   Bronze: {
     score: 35,
-    message: `Oof! You only got ${score} right! At least you're not Iron...`,
+    message: `At least you're not Iron...`,
   },
   Silver: {
     score: 55,
-    message: `Not bad! You got ${score} correct! You scored similarly to the average player!`,
+    message: `Not bad! You scored similarly to the average player!`,
   },
   Gold: {
     score: 72,
-    message: `Good job! You got ${score} correct! You're in the top half of all players!`,
+    message: `Good job! You're in the top half of all players!`,
   },
   Platinum: {
     score: 85,
-    message: `Great job! You got ${score} right! You are in the top quarter of all players!`,
+    message: `Great job! You are in the top quarter of all players!`,
   },
   Emerald: {
     score: 94,
-    message: `Well done! You managed to get ${score} correct! You're in the top 15% of all players!`,
+    message: `Well done! You're in the top 15% of all players!`,
   },
   Diamond: {
     score: 97,
-    message: `Way to go! You managed to get ${score} correct! You are in the top 5% of all players now!`,
+    message: `Way to go! You are in the top 5% of all players now!`,
   },
   Master: {
     score: 98,
-    message: `Fantastic! You managed to get ${score} correct! You're good enough to go professional!`,
+    message: `Fantastic! You're good enough to go professional!`,
   },
   Grandmaster: {
     score: 99,
-    message: `Amazing! You managed to get ${score} correct! You're in the top 0.5% of players but just a hair away from perfect!`,
+    message: `Amazing! You're in the top 0.5% of players but just a hair away from perfect!`,
   },
   Challenger: {
     score: 100,
-    message: `Congratulations! You managed to get ${score} correct! You've aced this quiz! Either this quiz is too easy or you play too much League!`,
+    message: `Congratulations! You've aced this quiz! Either this quiz is too easy or you play too much League!`,
   },
 };
 const recentChampions = [];
